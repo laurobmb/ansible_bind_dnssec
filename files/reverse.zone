@@ -1,0 +1,12 @@
+$TTL 0
+@ SOA ns.{{DOMINIO}}. hostmaster.{{DOMINIO}}. (
+    {{SERIAL}} ; serial
+    {{REFRESH}} ; refresh after 6 hours
+    {{RETRY}} ; retry after 1 hour
+    {{EXPIRE}} ; expire after 1 week
+    {{TTL}} ) ; minimum TTL of 1 day
+    IN  NS  ns.{{DOMINIO}}.
+
+{% for item in TIPOSA %}
+{{ item.IP }}       IN      PTR     {{ item.HOST }}.{{DOMINIO}}.
+{% endfor %}

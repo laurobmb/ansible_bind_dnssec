@@ -1,0 +1,66 @@
+---
+    - hosts: binddns
+
+      vars_files:
+        - ./vars.yaml
+
+      tasks:
+        - name: Instalação do DNSSEC
+          dnf:
+            name: "{{PACOTES}}"
+            state: present
+
+        - name: Copiando DNS
+          synchronize:
+            src: ./files/
+            dest: "{{WORKDIR}}"
+            delete: no
+            recursive: yes
+        
+        - name: Setando execução para os scripts
+          file:
+            path: "{{WORKDIR}}{{item}}"
+            owner: named
+            group: named
+            mode: '0700'
+          with_items: "{{ SCRIPTS }}"
+
+        - name: "Copiando arquivo de zona"
+          template: 
+            src: ./files/authority.zone
+            dest: /var/named/authority.zone
+
+        - name: "Copiando arquivo de zona"
+          template: 
+            src: ./files/reverse.zone
+            dest: /var/named/reverse.zone
+
+        - name: Assinando a zona
+          shell: "cd {{WORKDIR}} ; {{WORKDIR}}reassina.sh {{DOMINIO}} /var/named/authority.zone"
+        
+        - name: "Copiando arquivo de configuração"
+          template: 
+            src: ./files/named.conf
+            dest: /etc/named.conf
+
+        - name: Setando permissões dos arquivos 
+          file:
+            path: "{{ WORKDIR }}"
+            state: directory
+            recurse: yes
+            owner: named
+            group: named
+        
+        - name: Reiniciando o servido de DNS
+          systemd:
+            name: named
+            state: restarted
+            enabled: yes
+
+        - name: Ajustando o FIREWALLD
+          firewalld:
+            zone: public
+            service: dns
+            permanent: yes
+            state: enabled
+            immediate: yes

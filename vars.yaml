@@ -1,0 +1,49 @@
+---
+DOMINIO: "conectado.local"
+SERIAL: 2020041701
+REFRESH: 21600
+RETRY: 3600
+EXPIRE: 604800
+TTL: 86400
+
+TIPOSA:
+  - { HOST: ns , IP: 192.168.123.200 }
+  - { HOST: server1 , IP: 192.168.123.201 }
+  - { HOST: server2 , IP: 192.168.123.202 }
+  - { HOST: mail , IP: 192.168.123.203 }
+  - { HOST: mail2 , IP: 192.168.123.204 }
+
+TIPOSCNAME:
+  - { HOST: ftp, SERVER: server1 }
+  - { HOST: www, SERVER: server1 }
+  - { HOST: www2, SERVER: server1 }
+
+REDE_CONFIAVEIS: 
+  - 10.1.0.0/16
+  - 172.25.250.0/24
+  - 192.168.1.0/24
+  - 192.168.123.0/24  
+
+REDES_NAO_CONFIAVEIS:
+  - 192.168.12.0/24
+  - 192.168.13.0/24  
+  - 192.168.3.0/24      
+
+FORWARDS: 
+  - "8.8.8.8"
+  - "1.1.1.1"
+
+PACOTES:
+  - bind
+  - bind-utils
+  - bash-completion
+  - vim
+
+WORKDIR: "/var/named/"
+
+SCRIPTS:
+  - run.sh
+  - reassina.sh
+  - reassina.reverse.sh
+
+  
