@@ -7,7 +7,7 @@ $TTL 0
     {{TTL}} ) ; minimum TTL of 1 day
 
 {{DOMINIO}}.  IN  NS  ns.{{DOMINIO}}.
-{{DOMINIO}}.  IN  MX  10  mail.{{DOMINIO}}.
+{{DOMINIO}}.  IN  MX  10  mail1.{{DOMINIO}}.
 {{DOMINIO}}.  IN  MX  20  mail2.{{DOMINIO}}.
 
 {% for item in TIPOSA %}

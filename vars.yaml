@@ -6,12 +6,20 @@ RETRY: 3600
 EXPIRE: 604800
 TTL: 86400
 
+TIPOSNS:
+  - ns
+
+TIPOSMX:
+  - mail1
+  - mail2
+
 TIPOSA:
-  - { HOST: ns , IP: 192.168.123.200 }
+  - { HOST: ns , IP: 192.168.123.187 }
   - { HOST: server1 , IP: 192.168.123.201 }
-  - { HOST: server2 , IP: 192.168.123.202 }
-  - { HOST: mail , IP: 192.168.123.203 }
+  - { HOST: gitlab , IP: 192.168.123.204 }
+  - { HOST: mail1 , IP: 192.168.123.203 }
   - { HOST: mail2 , IP: 192.168.123.204 }
+  - { HOST: gitlab-runner , IP: 192.168.123.205 }
 
 TIPOSCNAME:
   - { HOST: ftp, SERVER: server1 }
@@ -20,12 +28,9 @@ TIPOSCNAME:
 
 REDE_CONFIAVEIS: 
   - 10.1.0.0/16
-  - 172.25.250.0/24
-  - 192.168.1.0/24
   - 192.168.123.0/24  
 
 REDES_NAO_CONFIAVEIS:
-  - 192.168.12.0/24
   - 192.168.13.0/24  
   - 192.168.3.0/24      
 
