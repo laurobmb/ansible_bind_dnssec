@@ -1,5 +1,5 @@
 $TTL 0
-@ SOA ns.{{DOMINIO}}. hostmaster.{{DOMINIO}}. (
+@ SOA ns1.{{DOMINIO}}. hostmaster.{{DOMINIO}}. (
     {{SERIAL}} ; serial
     {{REFRESH}} ; refresh after 6 hours
     {{RETRY}} ; retry after 1 hour

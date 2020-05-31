@@ -7,14 +7,16 @@ EXPIRE: 604800
 TTL: 86400
 
 TIPOSNS:
-  - ns
+  - ns1
+  - ns2
 
 TIPOSMX:
   - mail1
   - mail2
 
 TIPOSA:
-  - { HOST: ns , IP: 192.168.123.187 }
+  - { HOST: ns1 , IP: 192.168.123.187 }
+  - { HOST: ns2 , IP: 192.168.123.173 }
   - { HOST: server1 , IP: 192.168.123.201 }
   - { HOST: gitlab , IP: 192.168.123.204 }
   - { HOST: mail1 , IP: 192.168.123.203 }

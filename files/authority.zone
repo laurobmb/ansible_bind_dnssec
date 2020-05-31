@@ -1,12 +1,13 @@
 $TTL 0
-@   IN  SOA     ns.{{DOMINIO}}.   hostmaster.{{DOMINIO}}. (
+@   IN  SOA     ns1.{{DOMINIO}}.   hostmaster.{{DOMINIO}}. (
     {{SERIAL}} ; serial
     {{REFRESH}} ; refresh after 6 hours
     {{RETRY}} ; retry after 1 hour
     {{EXPIRE}} ; expire after 1 week
     {{TTL}} ) ; minimum TTL of 1 day
 
-{{DOMINIO}}.  IN  NS  ns.{{DOMINIO}}.
+{{DOMINIO}}.  IN  NS  ns1.{{DOMINIO}}.
+{{DOMINIO}}.  IN  NS  ns2.{{DOMINIO}}.
 {{DOMINIO}}.  IN  MX  10  mail1.{{DOMINIO}}.
 {{DOMINIO}}.  IN  MX  20  mail2.{{DOMINIO}}.
 
@@ -19,6 +20,7 @@ $TTL 0
 
 {{DOMINIO}}.  3600    TXT “v=spf1 a mx ptr -all”
 
-$include Kconectado.local.+008+36408.key
-$include Kconectado.local.+008+59587.key
+
+$include Kconectado.local.+008+41118.key
+$include Kconectado.local.+008+64130.key
 

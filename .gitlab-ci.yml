@@ -1,0 +1,61 @@
+stages:
+  - deploy_dnssec_homol
+  - dnssec_test
+  - deploy_dnssec
+
+variables:
+  GIT_STRATEGY: clone
+  DNS1: 192.168.123.187
+  DNS2: 192.168.123.173
+
+deploy do DNSSEC HOMOL:
+  stage: deploy_dnssec_homol
+  tags:
+    - ansible
+  image: ansible/centos7-ansible
+  script:
+    - echo "${ANSIBLE_KEY}" > id_ed25519
+    - printf "[binddns] \n${DNS2}" > /etc/ansible/hosts
+    - chmod 400 id_ed25519
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible-playbook --private-key=id_ed25519 --user ${ANSIBLE_USER} -e ansible_ssh_port=${ANSIBLE_PORT} deploy.yaml
+
+Teste DNSSEC 001:
+  stage: dnssec_test
+  tags:
+    - shell
+  script:
+    - host ns1.conectado.local ${DNS2}
+    - host ns2.conectado.local ${DNS2}
+    - host mail1.conectado.local ${DNS2}
+    - host mail2.conectado.local ${DNS2}
+    
+Teste DNSSEC 002:
+  stage: dnssec_test
+  tags:
+    - ansible
+  image: centos/python-36-centos7
+  script:
+    - python -m pip install -r test/requirements.txt
+    - python -m pip install --upgrade 
+    - echo "${ANSIBLE_KEY}" > id_ed25519
+    - printf "[binddns]\n${DNS1}\n${DNS2}\n[binddns:vars]\nansible_user=${ANSIBLE_USER}\nansible_ssh_port=${ANSIBLE_PORT}\nansible_ssh_private_key_file=id_ed25519\n" > hosts
+    - cat hosts
+    - printf "[defaults]\nremote_port=${ANSIBLE_PORT}\nremote_user=${ANSIBLE_USER}" > ansible.cfg
+    - cat ansible.cfg
+    - chmod 400 id_ed25519
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible -e ansible_ssh_port=${ANSIBLE_PORT} --private-key=id_ed25519 -i hosts -m ping binddns
+    - python -m pytest --hosts=binddns --connection=ansible --ansible-inventory=hosts test/dns.py 
+    
+deploy do DNSSEC:
+  stage: deploy_dnssec
+  tags:
+    - ansible
+  image: ansible/centos7-ansible
+  script:
+    - echo "${ANSIBLE_KEY}" > id_ed25519
+    - printf "[binddns] \n${DNS1}" > /etc/ansible/hosts
+    - chmod 400 id_ed25519
+    - export ANSIBLE_HOST_KEY_CHECKING=False
+    - ansible-playbook --private-key=id_ed25519 --user ${ANSIBLE_USER} -e ansible_ssh_port=${ANSIBLE_PORT} deploy.yaml
