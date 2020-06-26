@@ -26,8 +26,6 @@ Teste DNSSEC 001:
     - shell
   script:
     - host ns1.conectado.local ${DNS2}
-    - host ns2.conectado.local ${DNS2}
-    - host mail1.conectado.local ${DNS2}
     - host mail2.conectado.local ${DNS2}
     
 Teste DNSSEC 002:
@@ -47,6 +45,14 @@ Teste DNSSEC 002:
     - export ANSIBLE_HOST_KEY_CHECKING=False
     - ansible -e ansible_ssh_port=${ANSIBLE_PORT} --private-key=id_ed25519 -i hosts -m ping binddns
     - python -m pytest --hosts=binddns --connection=ansible --ansible-inventory=hosts test/dns.py 
+
+Teste DNSSEC 003:
+  stage: dnssec_test
+  tags:
+    - shell
+  script:
+    - host ns2.conectado.local ${DNS2}
+    - host mail1.conectado.local ${DNS2}
     
 deploy do DNSSEC:
   stage: deploy_dnssec

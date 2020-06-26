@@ -18,6 +18,14 @@ $TTL 0
 {{ item.HOST }}     IN      CNAME       {{ item.SERVER }} 
 {% endfor %}
 
+{% for item in WILDCARD %}
+{{ item.HOST }}     IN      A       {{ item.IP }} 
+{% endfor %}
+
+{% for item in TIPOSTXT %}
+{{ item.TXT }}  {{ item.VALOR }} 
+{% endfor %}
+
 {{DOMINIO}}.  3600    TXT “v=spf1 a mx ptr -all”
 
 

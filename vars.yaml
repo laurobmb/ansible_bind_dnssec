@@ -14,14 +14,29 @@ TIPOSMX:
   - mail1
   - mail2
 
+TIPOSTXT:
+    - { TXT: $ORIGIN , VALOR: apps.conectado.local }
+
+WILDCARD:
+    - { HOST: '*' , IP: 192.168.123.206 }  
+
 TIPOSA:
+  - { HOST: mail1 , IP: 192.168.123.10 }
+  - { HOST: mail2 , IP: 192.168.123.11 }
   - { HOST: ns1 , IP: 192.168.123.187 }
   - { HOST: ns2 , IP: 192.168.123.173 }
-  - { HOST: server1 , IP: 192.168.123.201 }
+  - { HOST: server1 , IP: 192.168.123.12 }
   - { HOST: gitlab , IP: 192.168.123.204 }
-  - { HOST: mail1 , IP: 192.168.123.203 }
-  - { HOST: mail2 , IP: 192.168.123.204 }
   - { HOST: gitlab-runner , IP: 192.168.123.205 }
+  - { HOST: okd , IP: 192.168.123.215 }  
+  - { HOST: okd01 , IP: 192.168.123.215 }  
+  - { HOST: kube01, IP: 192.168.123.206}
+  - { HOST: kube02, IP: 192.168.123.218 }
+  - { HOST: kube03, IP: 192.168.123.144 }
+  - { HOST: nfs, IP: 192.168.123.162 }
+  - { HOST: hulk, IP: 192.168.123.50 }
+  - { HOST: superman, IP: 192.168.123.51 }  
+
 
 TIPOSCNAME:
   - { HOST: ftp, SERVER: server1 }
