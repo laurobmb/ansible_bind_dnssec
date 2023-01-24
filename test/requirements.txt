@@ -1,2 +1,2 @@
 testinfra
-ansible==2.6
+ansible==7.0.0
